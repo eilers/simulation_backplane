@@ -1,0 +1,27 @@
+version: '3.2'
+networks:
+  rabbitmq_go_net: {driver: bridge}
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    networks: [rabbitmq_go_net]
+    ports: ['5672:5672', '15672:15672']
+    volumes: ['./.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/', '.docker-conf/rabbitmq/log/:/var/log/rabbitmq']
+  sender:
+    image: sender
+    build:
+      context: sender
+      dockerfile: Dockerfile
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - QUEUE_NAME=worker_queue
+    # env_file:
+    #   - .docker/.dev.env
+    # ports:
+    #   - "8010:8010"
+    networks: [rabbitmq_go_net]
+    expose:
+      - "8010"
+    depends_on:
+      - rabbitmq
