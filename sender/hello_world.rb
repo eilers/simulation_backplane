@@ -6,6 +6,8 @@ require "bunny"
 
 STDOUT.sync = true
 
+# Wait until Rabbit-MQ is up
+# TODO: Wait for start message via Rabbit-MQ
 sleep 15
 
 conn = Bunny.new(host: ENV["RABBITMQ_HOST"])

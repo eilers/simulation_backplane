@@ -16,12 +16,6 @@ services:
     environment:
       - RABBITMQ_HOST=rabbitmq
       - QUEUE_NAME=worker_queue
-    # env_file:
-    #   - .docker/.dev.env
-    # ports:
-    #   - "8010:8010"
     networks: [rabbitmq_go_net]
-    expose:
-      - "8010"
     depends_on:
       - rabbitmq
