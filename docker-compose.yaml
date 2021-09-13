@@ -19,3 +19,9 @@ services:
     networks: [rabbitmq_go_net]
     depends_on:
       - rabbitmq
+  gazebo:
+    image: gazebo
+    build:
+        context: gazebo
+        dockerfile: Dockerfile
+    ports: ['11345:11345/tcp', '11345:11345/udp']
